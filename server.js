@@ -6,7 +6,7 @@ const mongoose = require('mongoose')
 
 
 class Server {
-  constructor () {
+  constructor() {
     this.api = express()
     this.router = '/api'
 
@@ -15,7 +15,7 @@ class Server {
     this.database()
   }
 
-  database () {
+  database() {
     mongoose
       .connect(process.env.MONGO_URL,
         {
@@ -33,17 +33,17 @@ class Server {
         })
   }
 
-  middleware () {
+  middleware() {
     //this.api.use(cors())
     this.api.use(morgan('dev'))
     this.api.use(express.json())
   }
 
-  routers () {
+  routers() {
     this.api.use(this.router, require('./routers/index'))
   }
 
-  listen () {
+  listen() {
     this.api.listen(process.env.PORT, () => {
       console.log('Running server')
     })

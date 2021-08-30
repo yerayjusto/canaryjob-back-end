@@ -36,8 +36,8 @@ const userSchema = new mongoose.Schema({
   },
   socialMedia: [],
   experience: [],
-  studies: [studiesSchema]
-})
+  studies: [studiesSchema],
+}, { versionKey: false })
 
 const userModel = mongoose.model('users', userSchema)
 

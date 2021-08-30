@@ -32,7 +32,7 @@ const courseSchema = new mongoose.Schema({
     ref: 'users'
   }]
 
-})
+}, { versionKey: false })
 
 const courseModel = mongoose.model('courses', courseSchema)
 

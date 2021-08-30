@@ -28,7 +28,7 @@ const companiesSchema = new mongoose.Schema({
   },
   socialMedia: [socialSchema]
 
-})
+}, { versionKey: false })
 
 const companyModel = mongoose.model('companie', companiesSchema)
 

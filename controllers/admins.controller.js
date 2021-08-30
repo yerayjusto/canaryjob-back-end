@@ -20,7 +20,7 @@ exports.createAdmin = async (req, res) => {
     } else {
       res.json({ Error: 'Your admin password is wrong' })
     }
-  } catch (error) {
+  } catch (err) {
     res.status(500).json({ Msg: 'Error admin account is NOT created' })
   }
 }
@@ -40,7 +40,6 @@ exports.loginAdmin = async (req, res) => {
               return res.json({ token, ...USER_DATA })
             })
               .catch(err => {
-                console.log(err)
                 res.status(500).json({ Msg: 'Error' })
               })
           }
@@ -48,20 +47,19 @@ exports.loginAdmin = async (req, res) => {
       } else res.status(500).json({ Msg: 'Wrong email or password' })
     })
     .catch(err => {
-      console.log(err)
       res.status(500).json({ Msg: 'Error while login' })
     })
 }
 
-exports.signupUser = (req, res) => {
-  const HASHED_PWD = bcrypt.hashSync(req.body.password, 10)
-  req.body.password = HASHED_PWD
-  userModel.create(req.body)
-    .then(userNew => res.json({ name: userNew.name, email: userNew.email }))
-    .catch(err => {
-      console.log(err)
-      res.status(500).json({ Msg: 'Error' })
-    })
+exports.signupUser = async (req, res) => {
+  try {
+    const HASHED_PWD = bcrypt.hashSync(req.body.password, 10)
+    req.body.password = HASHED_PWD
+    const userNew = await userModel.create(req.body)
+    res.json(userNew)
+  } catch (err) {
+    res.status(500).json({ Msg: 'Error' })
+  }
 }
 
 exports.adminShowUsers = async (req, res) => {
@@ -94,14 +92,14 @@ exports.adminUpdateUser = async (req, res) => {
 }
 
 exports.adminCreateCompany = async (req, res) => {
-  const HASHED_PWD = bcrypt.hashSync(req.body.password, 10)
-  req.body.password = HASHED_PWD
-  companyModel.create(req.body)
-    .then(companyNew => res.json({ name: companyNew.name, email: companyNew.email }))
-    .catch(err => {
-      console.log(err)
-      res.status(500).json({ Msg: 'Error' })
-    })
+  try {
+    const HASHED_PWD = bcrypt.hashSync(req.body.password, 10)
+    req.body.password = HASHED_PWD
+    const companyNew = await companyModel.create(req.body)
+    res.json(companyNew)
+  } catch (err) {
+    res.status(500).json({ Msg: 'Error' })
+  }
 }
 
 exports.adminShowCompanies = async (req, res) => {

@@ -16,8 +16,8 @@ const adminSchema = new mongoose.Schema({
   },
   admin: {
     type: Boolean
-  }
-})
+  },
+}, { versionKey: false }) 
 
 const adminModel = mongoose.model('admins', adminSchema)
 

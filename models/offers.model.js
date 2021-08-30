@@ -24,7 +24,7 @@ const jobSchema = new mongoose.Schema({
     ref: 'users'
   }]
 
-})
+}, { versionKey: false })
 
 const jobModel = mongoose.model('jobOffer', jobSchema)
 
